@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        WebLens | Scraping Results
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     NAVBAR
+========================================== -->
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <div class="brand">
+
+            <div class="logo">
+                WebLens
+            </div>
+
+            <div class="nav-subtitle">
+                Web Data Extraction & Analysis
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ==========================================
+     MAIN
+========================================== -->
+
+<main class="container">
+
+
+    <!-- RESULTS HEADER -->
+
+    <section class="results-header">
+
+        <div>
+
+            <span class="hero-label">
+                SCRAPING COMPLETE
+            </span>
+
+
+            <h1>
+                Scraping Results
+            </h1>
+
+
+            <p class="scraped-url">
+                {{ data.url }}
+            </p>
+
+        </div>
+
+
+        <a
+            href="/"
+            class="back-button"
+        >
+
+            ← New Scrape
+
+        </a>
+
+    </section>
+
+
+
+    <!-- PAGE TITLE -->
+
+    <section class="page-title-section">
+
+        <span class="section-eyebrow">
+            PAGE TITLE
+        </span>
+
+
+        <h2>
+            {{ data.title }}
+        </h2>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         WEBPAGE OVERVIEW
+    ========================================== -->
+
+    <section class="overview-section">
+
+
+        <div class="overview-heading">
+
+            <span class="section-eyebrow">
+                ANALYSIS
+            </span>
+
+
+            <h2>
+                Webpage Overview
+            </h2>
+
+
+            <p>
+                A quick summary of the content
+                extracted from this webpage.
+            </p>
+
+        </div>
+
+
+
+        <div class="overview-grid">
+
+
+            <div class="overview-card">
+
+                <div class="overview-icon">
+                    H
+                </div>
+
+                <div class="overview-info">
+
+                    <span class="overview-number">
+                        {{ data.statistics.headings }}
+                    </span>
+
+                    <span class="overview-label">
+                        Headings
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="overview-card">
+
+                <div class="overview-icon">
+                    P
+                </div>
+
+                <div class="overview-info">
+
+                    <span class="overview-number">
+                        {{ data.statistics.paragraphs }}
+                    </span>
+
+                    <span class="overview-label">
+                        Paragraphs
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="overview-card">
+
+                <div class="overview-icon">
+                    ↗
+                </div>
+
+                <div class="overview-info">
+
+                    <span class="overview-number">
+                        {{ data.statistics.links }}
+                    </span>
+
+                    <span class="overview-label">
+                        Links
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="overview-card">
+
+                <div class="overview-icon">
+                    ▧
+                </div>
+
+                <div class="overview-info">
+
+                    <span class="overview-number">
+                        {{ data.statistics.images }}
+                    </span>
+
+                    <span class="overview-label">
+                        Images
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="overview-card">
+
+                <div class="overview-icon">
+                    Aa
+                </div>
+
+                <div class="overview-info">
+
+                    <span class="overview-number">
+                        {{ data.statistics.words }}
+                    </span>
+
+                    <span class="overview-label">
+                        Words Extracted
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         EXTRACTED DATA
+    ========================================== -->
+
+    <section class="content-section">
+
+
+        <div class="content-header">
+
+            <span class="section-eyebrow">
+                EXTRACTED DATA
+            </span>
+
+
+            <h2>
+                Page Content
+            </h2>
+
+
+            <p>
+                Explore the individual elements
+                collected from the webpage.
+            </p>
+
+        </div>
+
+
+
+        <!-- HEADINGS -->
+
+        <div class="data-block">
+
+            <h3>
+                Headings
+            </h3>
+
+
+            {% if data.headings %}
+
+                <ul>
+
+                    {% for heading in data.headings %}
+
+                        <li>
+                            {{ heading }}
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <p class="empty-data">
+                    No headings found.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- PARAGRAPHS -->
+
+        <div class="data-block">
+
+            <h3>
+                Paragraphs
+            </h3>
+
+
+            {% if data.paragraphs %}
+
+                {% for paragraph in data.paragraphs %}
+
+                    <p class="paragraph-item">
+                        {{ paragraph }}
+                    </p>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="empty-data">
+                    No paragraphs found.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- LINKS -->
+
+        <div class="data-block">
+
+            <h3>
+                Links
+            </h3>
+
+
+            {% if data.links %}
+
+                <div class="link-list">
+
+                    {% for link in data.links %}
+
+                        <a
+                            href="{{ link }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            {{ link }}
+
+                        </a>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="empty-data">
+                    No links found.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- IMAGES -->
+
+        <div class="data-block">
+
+            <h3>
+                Images
+            </h3>
+
+
+            {% if data.images %}
+
+                <div class="image-list">
+
+                    {% for image in data.images %}
+
+                        <a
+                            href="{{ image }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            {{ image }}
+
+                        </a>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="empty-data">
+                    No images found.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ==========================================
+         EXPORT
+    ========================================== -->
+
+    <section class="download-section">
+
+
+        <div>
+
+            <span class="section-eyebrow">
+                EXPORT
+            </span>
+
+
+            <h2>
+                Save your scraped data
+            </h2>
+
+
+            <p>
+                Download the extracted webpage
+                content as a CSV file.
+            </p>
+
+        </div>
+
+
+
+        <form
+            action="/download"
+            method="POST"
+        >
+
+
+            <input
+                type="hidden"
+                name="title"
+                value="{{ data.title }}"
+            >
+
+
+            {% for heading in data.headings %}
+
+                <input
+                    type="hidden"
+                    name="headings"
+                    value="{{ heading }}"
+                >
+
+            {% endfor %}
+
+
+            {% for paragraph in data.paragraphs %}
+
+                <input
+                    type="hidden"
+                    name="paragraphs"
+                    value="{{ paragraph }}"
+                >
+
+            {% endfor %}
+
+
+            {% for link in data.links %}
+
+                <input
+                    type="hidden"
+                    name="links"
+                    value="{{ link }}"
+                >
+
+            {% endfor %}
+
+
+            {% for image in data.images %}
+
+                <input
+                    type="hidden"
+                    name="images"
+                    value="{{ image }}"
+                >
+
+            {% endfor %}
+
+
+            <button
+                type="submit"
+                class="download-button"
+            >
+
+                Download CSV
+
+            </button>
+
+        </form>
+
+    </section>
+
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+    <p>
+        WebLens · Built with Python, Flask & BeautifulSoup
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

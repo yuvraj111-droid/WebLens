@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        WebLens | Web Data Extraction
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     NAVBAR
+========================================== -->
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <div class="brand">
+
+            <div class="logo">
+                WebLens
+            </div>
+
+            <div class="nav-subtitle">
+                Web Data Extraction & Analysis
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ==========================================
+     MAIN
+========================================== -->
+
+<main class="container">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <span class="hero-label">
+            WEB DATA EXTRACTION
+        </span>
+
+
+        <h1>
+
+            Explore the web.
+            <span>Extract the data.</span>
+
+        </h1>
+
+
+        <p>
+
+            WebLens extracts useful information from
+            publicly accessible webpages, including
+            headings, paragraphs, links, images,
+            and page statistics.
+
+        </p>
+
+
+        <!-- SCRAPE FORM -->
+
+        <form
+            action="/scrape"
+            method="POST"
+            class="scrape-form"
+        >
+
+            <input
+                type="url"
+                name="url"
+                placeholder="Enter webpage URL..."
+                required
+            >
+
+
+            <button type="submit">
+
+                Analyze Website
+
+            </button>
+
+        </form>
+
+
+        {% if error %}
+
+            <div class="error-message">
+
+                {{ error }}
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- ==========================================
+         FEATURES
+    ========================================== -->
+
+    <section class="features-section">
+
+        <div class="section-heading">
+
+            <span class="section-eyebrow">
+                CAPABILITIES
+            </span>
+
+            <h2>
+                What WebLens extracts
+            </h2>
+
+            <p>
+                Quickly inspect the most useful
+                elements of a webpage.
+            </p>
+
+        </div>
+
+
+        <div class="features">
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    H
+                </div>
+
+                <h3>
+                    Headings
+                </h3>
+
+                <p>
+                    Extracts H1 through H6 headings
+                    and identifies the page structure.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    P
+                </div>
+
+                <h3>
+                    Content
+                </h3>
+
+                <p>
+                    Collects readable paragraph content
+                    from the webpage.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ↗
+                </div>
+
+                <h3>
+                    Links
+                </h3>
+
+                <p>
+                    Finds webpage links and converts
+                    relative URLs into complete URLs.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ▧
+                </div>
+
+                <h3>
+                    Images
+                </h3>
+
+                <p>
+                    Extracts image URLs available
+                    in the webpage HTML.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         HISTORY
+    ========================================== -->
+
+    <section class="history-section">
+
+
+        <div class="history-header">
+
+            <div>
+
+                <span class="section-eyebrow">
+                    ACTIVITY
+                </span>
+
+                <h2>
+                    Recent Scrapes
+                </h2>
+
+                <p>
+                    Your latest webpage analysis sessions.
+                </p>
+
+            </div>
+
+
+            {% if history %}
+
+                <form
+                    action="/clear-history"
+                    method="POST"
+                    onsubmit="return confirm(
+                        'Are you sure you want to clear your scraping history?'
+                    )"
+                >
+
+                    <button
+                        type="submit"
+                        class="clear-button"
+                    >
+
+                        Clear History
+
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+        </div>
+
+
+        {% if history %}
+
+            <div class="history-list">
+
+                {% for item in history %}
+
+                    <div class="history-item">
+
+                        <div class="history-number">
+
+                            {{ loop.index }}
+
+                        </div>
+
+
+                        <div class="history-content">
+
+                            <h3>
+                                {{ item.title }}
+                            </h3>
+
+                            <p>
+                                {{ item.url }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="empty-history">
+
+                <p>
+                    No scraping history yet.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
+<footer class="footer">
+
+    <p>
+        WebLens · Built with Python, Flask & BeautifulSoup
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
